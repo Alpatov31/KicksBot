@@ -1,0 +1,47 @@
+{
+  "one_time": false,
+  "buttons": [
+    [{
+        "action": {
+          "type": "text",
+          "label": "Silver"
+        },
+        "color": "default"
+      },
+      {
+          "action": {
+            "type": "text",
+            "label": "Black"
+          },
+          "color": "default"
+          },
+        {
+          "action": {
+            "type": "text",
+            "label": "Gray"
+          },
+          "color": "default"
+          },
+        {
+          "action": {
+            "type": "text",
+            "label": "White"
+          },
+          "color": "default"
+          },
+        {
+          "action": {
+            "type": "text",
+            "label": "Red"
+          },
+          "color": "default"
+    }],
+    [{
+        "action": {
+          "type": "text",
+          "label": "qwe"
+        },
+        "color": "default"
+      }]
+  ]
+}
