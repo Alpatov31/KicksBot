@@ -35,7 +35,7 @@ imgs = ["maestro_2.jpg", "Bruh_2.jpg", "5doggo.jpg", "stalker.jpg", "russia.jpg"
 imgs_links = []
 
 for i in imgs:
-    img = uploader.photo_messages(i)[0]
+    img = uploader.photo_messages("images/"+i)[0]
     link = "photo"+str(img["owner_id"])+"_"+str(img["id"])
     imgs_links.append(link)
 
@@ -75,11 +75,11 @@ while True:
         if state == "start":
             out_text = "Привет, напиши свой размер(us)."
             users[from_id]["state"] = "size"
-            kbrd = open("keyboard.json", "r", encoding="UTF-8").read()
+            kbrd = open("keyboards/keyboard.json", "r", encoding="UTF-8").read()
         elif state == "size":
             if in_text in sizes:
                 users[from_id]["size"] = in_text
-                kbrd = open("keybrd.json", "r", encoding="UTF-8").read()
+                kbrd = open("keyboards/keybrd.json", "r", encoding="UTF-8").read()
                 out_text = "Отлично, теперь введи цвет кроссовок, которые ты хочешь по-английски."
                 users[from_id]["state"] = "color"
             else:
