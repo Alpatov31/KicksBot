@@ -23,7 +23,7 @@ def process(intext):
 conn = sqlite3.connect("database.db")
 cursor = conn.cursor()
 
-token = "b124a9e146dd07b3164a57f7b6857f6055d1f4d325587759071c70bba36db11826650130da6cb55442135"
+token = ""
 
 vk = vk_api.VkApi(token=token)
 vk._auth_token()
