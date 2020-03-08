@@ -46,6 +46,8 @@ for i in imgs:
 colors = ["silver", "black", "gray", "white", "red"]
 sizes = ["8", "8_5", "9", "9_5", "10", "10_5", "11", "11_5"]
 
+kbrd = open("keyboards/empty.json", "r", encoding="UTF-8").read()
+
 # vk.method("messages.send", {"peer_id": 182479157, "message": "Bruh", "random_id": random.randint(1, 1000)})
 # messages = vk.method("messages.getConversations", value)
 # print(messages["items"][0]["last_message"]["text"])
@@ -66,6 +68,9 @@ while True:
             cursor.execute(sql)
             conn.commit()
 
+        if in_text == "Home":
+            set_state("start", from_id)
+
         sql = f"SELECT state FROM Users WHERE id={from_id} "
         cursor.execute(sql)
         state = cursor.fetchone()[0]
@@ -74,11 +79,11 @@ while True:
         if state == "start":
             out_text = "Привет, напиши свой размер(us)."
             set_state("size", from_id)
-            kbrd = open("keyboards/keyboard.json", "r", encoding="UTF-8").read()
+            kbrd = open("keyboards/sizes.json", "r", encoding="UTF-8").read()
         elif state == "size":
             if in_text in sizes:
                 set_property("size", in_text, from_id)
-                kbrd = open("keyboards/keybrd.json", "r", encoding="UTF-8").read()
+                kbrd = open("keyboards/colors.json", "r", encoding="UTF-8").read()
                 out_text = "Отлично, теперь введи цвет кроссовок, которые ты хочешь по-английски."
                 set_state("color", from_id)
             else:
@@ -88,7 +93,9 @@ while True:
                 set_property("color", in_text.lower(), from_id)
                 out_text = "https://sneakerhead.ru/shoes/sneakers/" + get_property("color", from_id) + "/size-" + \
                            get_property("size", from_id) + "/"
+                kbrd = open("keyboards/home.json", "r", encoding="UTF-8").read()
                 set_state("finish", from_id)
+
             else:
                 out_text = "Введите один из: " + ", ".join(colors)
 
