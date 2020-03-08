@@ -2,6 +2,8 @@ import vk_api
 import random
 import time
 import sqlite3
+import os
+
 
 def process(intext):
     intext = intext.lower()
@@ -16,27 +18,27 @@ def process(intext):
     else:
         outtext = "Bruh"
 
-
-
     return outtext
+
 
 conn = sqlite3.connect("database.db")
 cursor = conn.cursor()
 
-token = "b124a9e146dd07b3164a57f7b6857f6055d1f4d325587759071c70bba36db11826650130da6cb55442135"
+token = os.environ['VK_TOKEN']
 
 vk = vk_api.VkApi(token=token)
 vk._auth_token()
 uploader = vk_api.upload.VkUpload(vk)
 
-value = {"count":20, "offset":0, "filter":"unanswered"}
+value = {"count": 20, "offset": 0, "filter": "unanswered"}
 
-imgs = ["maestro_2.jpg", "Bruh_2.jpg", "5doggo.jpg", "stalker.jpg", "russia.jpg", "shlyapa.jpg", "crying_cat.jpg", "metroboomin.jpg", "volk.jpg"]
+imgs = ["maestro_2.jpg", "Bruh_2.jpg", "5doggo.jpg", "stalker.jpg", "russia.jpg", "shlyapa.jpg", "crying_cat.jpg",
+        "metroboomin.jpg", "volk.jpg"]
 imgs_links = []
 
 for i in imgs:
-    img = uploader.photo_messages("images/"+i)[0]
-    link = "photo"+str(img["owner_id"])+"_"+str(img["id"])
+    img = uploader.photo_messages("images/" + i)[0]
+    link = "photo" + str(img["owner_id"]) + "_" + str(img["id"])
     imgs_links.append(link)
 
 colors = ["silver", "black", "gray", "white", "red"]
@@ -71,7 +73,6 @@ while True:
         state = cursor.fetchone()[0]
         print(state)
 
-
         if state == "start":
             out_text = "Привет, напиши свой размер(us)."
             users[from_id]["state"] = "size"
@@ -83,11 +84,12 @@ while True:
                 out_text = "Отлично, теперь введи цвет кроссовок, которые ты хочешь по-английски."
                 users[from_id]["state"] = "color"
             else:
-                out_text = "Введите один из: "+", ".join(sizes)
+                out_text = "Введите один из: " + ", ".join(sizes)
         elif state == "color":
             if in_text.lower() in colors:
                 users[from_id]["color"] = in_text.lower()
-                out_text = "https://sneakerhead.ru/shoes/sneakers/" + users[from_id]["color"] + "/size-" + users[from_id]["size"] + "/"
+                out_text = "https://sneakerhead.ru/shoes/sneakers/" + users[from_id]["color"] + "/size-" + \
+                           users[from_id]["size"] + "/"
                 users[from_id]["state"] = "finish"
             else:
                 out_text = "Введите один из: " + ", ".join(colors)
@@ -95,7 +97,5 @@ while True:
         # out_text = process(in_text)
 
         vk.method("messages.send", {"peer_id": from_id, "message": out_text, "random_id": random.randint(1, 1000),
-                                    "attachment": random.choice(imgs_links), "keyboard":kbrd})
+                                    "attachment": random.choice(imgs_links), "keyboard": kbrd})
     time.sleep(1)
-
-
