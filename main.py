@@ -9,32 +9,18 @@ def set_state(state, id):
     sql = f'''UPDATE Users SET state='{state}' WHERE id={id} '''
     cursor.execute(sql)
     conn.commit()
+
+
 def set_property(name, value, id):
     sql = f'''UPDATE Users SET {name}='{value}' WHERE id={id} '''
     cursor.execute(sql)
     conn.commit()
+
+
 def get_property(name, id):
     sql = f"SELECT {name} FROM Users WHERE id={from_id} "
     cursor.execute(sql)
     return cursor.fetchone()[0]
-
-
-
-
-def process(intext):
-    intext = intext.lower()
-    if intext == "как дела?":
-        outtext = "Нормально"
-    elif intext == "что делаешь?":
-        outtext = "Анализирую"
-    elif intext == "bruh":
-        outtext = "Bruhable"
-    elif intext == "помянем?":
-        outtext = "Помянем"
-    else:
-        outtext = "Bruh"
-
-    return outtext
 
 
 conn = sqlite3.connect("database.db")
