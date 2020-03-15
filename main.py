@@ -23,6 +23,37 @@ def get_property(name, id):
     return cursor.fetchone()[0]
 
 
+def url_sneakerhead(id):
+    g = get_property("gender", id)
+    c = get_property("color", id)
+    s = get_property("size", id)
+    return "https://sneakerhead.ru/shoes/sneakers/" + g + "/" + c + "/size-" + \
+           s + "/"
+
+
+def url_brandshop(id):
+    g = get_property("gender", id)
+    c = get_property("color", id)
+    s = get_property("size", id)
+    trans_g = { "men": "muzhskoe",
+                'women': "zhenskoe",
+    }
+    trans_c = {"black": "черный",
+               "white": "белый",
+               "green": "зеленый",
+    }
+    trans_s = {"8": "40",
+               "8_5": "40.5",
+                "9": "41",
+               }
+    g = trans_g[g]
+    c = trans_c[c]
+    s = trans_s[s]
+
+    return "https://brandshop.ru/" + g +"/obuv/krossovki/?mfp=16-tsvet[" + c + "],13o-razmer[" + s + "%20EU]/"
+
+
+
 conn = sqlite3.connect("database.db")
 cursor = conn.cursor()
 
@@ -43,8 +74,9 @@ for i in imgs:
     link = "photo" + str(img["owner_id"]) + "_" + str(img["id"])
     imgs_links.append(link)
 
-colors = ["silver", "black", "gray", "white", "red"]
+colors = ["silver", "black", "gray", "white", "red", "orange", "yellow", "green", "purple"]
 sizes = ["8", "8_5", "9", "9_5", "10", "10_5", "11", "11_5"]
+genders = ["men", "women", "kids"]
 
 kbrd = open("keyboards/empty.json", "r", encoding="UTF-8").read()
 
@@ -83,16 +115,21 @@ while True:
         elif state == "size":
             if in_text in sizes:
                 set_property("size", in_text, from_id)
-                kbrd = open("keyboards/colors.json", "r", encoding="UTF-8").read()
-                out_text = "Отлично, теперь введи цвет кроссовок, которые ты хочешь по-английски."
-                set_state("color", from_id)
+                kbrd = open("keyboards/genders.json", "r", encoding="UTF-8").read()
+                out_text = "Теперь введите ваш пол."
+                set_state("gender", from_id)
             else:
                 out_text = "Введите один из: " + ", ".join(sizes)
+        elif state == "gender":
+            if in_text.lower() in genders:
+                set_property("gender", in_text.lower(), from_id)
+                out_text = "Отлично, теперь введи цвет кроссовок, которые ты хочешь."
+                kbrd = open("keyboards/colors.json", "r", encoding="UTF-8").read()
+                set_state("color", from_id)
         elif state == "color":
             if in_text.lower() in colors:
                 set_property("color", in_text.lower(), from_id)
-                out_text = "https://sneakerhead.ru/shoes/sneakers/" + get_property("color", from_id) + "/size-" + \
-                           get_property("size", from_id) + "/"
+                out_text = url_sneakerhead(from_id)+"\n"+url_brandshop(from_id)
                 kbrd = open("keyboards/home.json", "r", encoding="UTF-8").read()
                 set_state("finish", from_id)
 

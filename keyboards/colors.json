@@ -1,7 +1,8 @@
 {
   "one_time": false,
   "buttons": [
-    [{
+    [
+      {
         "action": {
           "type": "text",
           "label": "Silver"
@@ -9,39 +10,70 @@
         "color": "default"
       },
       {
-          "action": {
-            "type": "text",
-            "label": "Black"
-          },
-          "color": "default"
-          },
-        {
-          "action": {
-            "type": "text",
-            "label": "Gray"
-          },
-          "color": "default"
-          },
-        {
-          "action": {
-            "type": "text",
-            "label": "White"
-          },
-          "color": "default"
-          },
-        {
-          "action": {
-            "type": "text",
-            "label": "Red"
-          },
-          "color": "default"
-    }],
-    [{
         "action": {
           "type": "text",
-          "label": "qwe"
+          "label": "Black"
         },
         "color": "default"
-      }]
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "Gray"
+        },
+        "color": "default"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "White"
+        },
+        "color": "default"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "Red"
+        },
+        "color": "default"
+      }
+    ],
+    [
+      {
+        "action": {
+          "type": "text",
+          "label": "Orange"
+        },
+        "color": "default"
+      },
+      {
+        "action": {
+          "type": "text",
+          "label": "Yellow"
+        },
+        "color": "default"
+        },
+        {
+          "action": {
+            "type": "text",
+            "label": "Green"
+          },
+          "color": "default"
+          },
+        {
+          "action": {
+            "type": "text",
+            "label": "Blue"
+          },
+          "color": "default"
+          },
+        {
+          "action": {
+            "type": "text",
+            "label": "Purple"
+          },
+          "color": "default"
+      }
+    ]
   ]
 }
